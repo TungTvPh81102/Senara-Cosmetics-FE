@@ -1,10 +1,10 @@
-import { useCallback } from 'react';
-import { toast } from 'sonner';
-import { ApiError } from '@/types/api';
+import { useCallback } from "react";
+import { toast } from "sonner";
+import { ApiError } from "@/types/api";
 
 export const useApiError = () => {
   const handleError = useCallback((error: ApiError) => {
-    console.error('API Error:', error);
+    console.error("API Error:", error);
 
     if (error.errors && Object.keys(error.errors).length > 0) {
       Object.entries(error.errors).forEach(([field, messages]) => {

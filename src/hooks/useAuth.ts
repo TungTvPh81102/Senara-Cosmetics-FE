@@ -1,10 +1,10 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
-import { AuthService } from '@/services/auth.service';
-import { LoginRequest, RegisterRequest, AuthResponse } from '@/types/api';
-import { queryKeys } from '@/lib/query-keys';
-import { useCreate, useUpdate } from './useCrud';
-import apiClient from '@/lib/api';
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+import { AuthService } from "@/services/auth.service";
+import { LoginRequest, RegisterRequest, AuthResponse } from "@/types/api";
+import { queryKeys } from "@/lib/query-keys";
+import { useCreate, useUpdate } from "./useCrud";
+import apiClient from "@/lib/api";
 
 export function useLogin() {
   const router = useRouter();
@@ -17,10 +17,10 @@ export function useLogin() {
 
       queryClient.setQueryData(queryKeys.auth.me(), data.user);
 
-      router.push('/dashboard');
+      router.push("/dashboard");
     },
     onError: (error) => {
-      console.error('Login failed:', error);
+      console.error("Login failed:", error);
     },
   });
 }
@@ -36,10 +36,10 @@ export function useRegister() {
 
       queryClient.setQueryData(queryKeys.auth.me(), data.user);
 
-      router.push('/dashboard');
+      router.push("/dashboard");
     },
     onError: (error) => {
-      console.error('Register failed:', error);
+      console.error("Register failed:", error);
     },
   });
 }
@@ -55,12 +55,12 @@ export function useLogout() {
 
       queryClient.clear();
 
-      router.push('/login');
+      router.push("/login");
     },
     onError: () => {
       apiClient.clearAuth();
       queryClient.clear();
-      router.push('/login');
+      router.push("/login");
     },
   });
 }
@@ -95,41 +95,36 @@ export function useRefreshToken() {
 }
 
 export function useForgotPassword() {
-  return useCreate(
-    (email: string) => AuthService.forgotPassword(email),
-    {
-      successMessage: 'Email khôi phục mật khẩu đã được gửi!',
-    }
-  );
+  return useCreate((email: string) => AuthService.forgotPassword(email), {
+    successMessage: "Email khôi phục mật khẩu đã được gửi!",
+  });
 }
 
 export function useResetPassword() {
   return useCreate(
-    ({ token, password, passwordConfirmation }: {
+    ({
+      token,
+      password,
+      passwordConfirmation,
+    }: {
       token: string;
       password: string;
       passwordConfirmation: string;
     }) => AuthService.resetPassword(token, password, passwordConfirmation),
     {
-      successMessage: 'Mật khẩu đã được đặt lại thành công!',
-    }
+      successMessage: "Mật khẩu đã được đặt lại thành công!",
+    },
   );
 }
 
 export function useVerifyEmail() {
-  return useCreate(
-    (token: string) => AuthService.verifyEmail(token),
-    {
-      successMessage: 'Email đã được xác thực thành công!',
-    }
-  );
+  return useCreate((token: string) => AuthService.verifyEmail(token), {
+    successMessage: "Email đã được xác thực thành công!",
+  });
 }
 
 export function useResendVerificationEmail() {
-  return useCreate(
-    () => AuthService.resendVerificationEmail(),
-    {
-      successMessage: 'Email xác thực đã được gửi lại!',
-    }
-  );
+  return useCreate(() => AuthService.resendVerificationEmail(), {
+    successMessage: "Email xác thực đã được gửi lại!",
+  });
 }
