@@ -1,5 +1,5 @@
-import { QueryClient } from '@tanstack/react-query';
-import { ApiError } from '@/types/api';
+import { QueryClient } from "@tanstack/react-query";
+import { ApiError } from "@/types/api";
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -30,10 +30,9 @@ export const queryClient = new QueryClient({
   },
 });
 
-queryClient.setMutationDefaults(['*'], {
+queryClient.setMutationDefaults(["*"], {
   onError: (error: unknown) => {
     const apiError = error as unknown as ApiError;
-    console.error('Mutation error:', apiError);
+    console.error("Mutation error:", apiError);
   },
 });
-

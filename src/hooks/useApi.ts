@@ -1,6 +1,6 @@
-import { useState, useCallback } from 'react';
-import { ApiError } from '@/types/api';
-import { useApiError } from './useApiError';
+import { useState, useCallback } from "react";
+import { ApiError } from "@/types/api";
+import { useApiError } from "./useApiError";
 
 interface UseApiState<T> {
   data: T | null;
@@ -21,7 +21,7 @@ export const useApi = <T = any>(
     showErrorToast?: boolean;
     showSuccessToast?: boolean;
     successMessage?: string;
-  }
+  },
 ): UseApiReturn<T> => {
   const [state, setState] = useState<UseApiState<T>>({
     data: null,
@@ -33,11 +33,11 @@ export const useApi = <T = any>(
 
   const execute = useCallback(
     async (...args: any[]): Promise<T | null> => {
-      setState(prev => ({ ...prev, loading: true, error: null }));
+      setState((prev) => ({ ...prev, loading: true, error: null }));
 
       try {
         const result = await apiFunction(...args);
-        setState(prev => ({ ...prev, data: result, loading: false }));
+        setState((prev) => ({ ...prev, data: result, loading: false }));
 
         if (options?.onSuccess) {
           options.onSuccess(result);
@@ -50,7 +50,7 @@ export const useApi = <T = any>(
         return result;
       } catch (error) {
         const apiError = error as ApiError;
-        setState(prev => ({ ...prev, error: apiError, loading: false }));
+        setState((prev) => ({ ...prev, error: apiError, loading: false }));
 
         if (options?.onError) {
           options.onError(apiError);
@@ -63,7 +63,7 @@ export const useApi = <T = any>(
         return null;
       }
     },
-    [apiFunction, options, handleError, handleSuccess]
+    [apiFunction, options, handleError, handleSuccess],
   );
 
   const reset = useCallback(() => {
