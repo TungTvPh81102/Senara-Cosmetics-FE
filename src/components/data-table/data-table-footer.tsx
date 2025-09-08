@@ -15,14 +15,21 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-type DataTablePaginationProps<TData> = {
+type DataTableFooterProps<TData> = {
   table: Table<TData>;
+  pageSizeOptions?: number[];
 };
 
-export function DataTablePagination<TData>({ table }: DataTablePaginationProps<TData>) {
+export function DataTableFooter<TData>({
+  table,
+  pageSizeOptions = [10, 20, 30, 40, 50],
+}: DataTableFooterProps<TData>) {
   const currentPage = table.getState().pagination.pageIndex + 1;
   const totalPages = table.getPageCount();
   const pageNumbers = getPageNumbers(currentPage, totalPages);
+  const selectedRows = table.getFilteredSelectedRowModel().rows.length;
+  const totalRows = table.getFilteredRowModel().rows.length;
+  const hasSelectedRows = selectedRows > 0;
 
   return (
     <div
@@ -33,8 +40,14 @@ export function DataTablePagination<TData>({ table }: DataTablePaginationProps<T
       style={{ overflowClipMargin: 1 }}
     >
       <div className="flex w-full items-center justify-between">
-        <div className="flex w-[100px] items-center justify-center text-sm font-medium @2xl/content:hidden">
-          Page {currentPage} of {totalPages}
+        <div className="flex w-[200px] items-center justify-center text-sm font-medium @2xl/content:hidden">
+          {hasSelectedRows ? (
+            <>
+              Đã chọn {selectedRows}/{totalRows} hàng
+            </>
+          ) : (
+            <>Hiển thị {totalRows} hàng</>
+          )}
         </div>
         <div className="flex items-center gap-2 @max-2xl/content:flex-row-reverse">
           <Select
@@ -47,20 +60,26 @@ export function DataTablePagination<TData>({ table }: DataTablePaginationProps<T
               <SelectValue placeholder={table.getState().pagination.pageSize} />
             </SelectTrigger>
             <SelectContent side="top">
-              {[10, 20, 30, 40, 50].map((pageSize) => (
+              {pageSizeOptions.map((pageSize) => (
                 <SelectItem key={pageSize} value={`${pageSize}`}>
                   {pageSize}
                 </SelectItem>
               ))}
             </SelectContent>
           </Select>
-          <p className="hidden text-sm font-medium sm:block">Rows per page</p>
+          <p className="hidden text-sm font-medium sm:block">Số hàng trên mỗi trang</p>
         </div>
       </div>
 
       <div className="flex items-center sm:space-x-6 lg:space-x-8">
         <div className="flex w-[100px] items-center justify-center text-sm font-medium @max-3xl/content:hidden">
-          Page {currentPage} of {totalPages}
+          {hasSelectedRows ? (
+            <>
+              Đã chọn {selectedRows}/{totalRows} hàng
+            </>
+          ) : (
+            <>Hiển thị {totalRows} hàng</>
+          )}
         </div>
         <div className="flex items-center space-x-2">
           <Button
@@ -82,7 +101,6 @@ export function DataTablePagination<TData>({ table }: DataTablePaginationProps<T
             <ChevronLeftIcon className="h-4 w-4" />
           </Button>
 
-          {/* Page number buttons */}
           {pageNumbers.map((pageNumber, index) => (
             <div key={`${pageNumber}-${index}`} className="flex items-center">
               {pageNumber === "..." ? (

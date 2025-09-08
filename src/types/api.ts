@@ -1,4 +1,3 @@
-// API Response Types
 export interface ApiResponse<T = any> {
   data: T;
   message?: string;
@@ -11,7 +10,6 @@ export interface ApiError {
   status: number;
 }
 
-// Pagination Types
 export interface PaginationMeta {
   current_page: number;
   last_page: number;
@@ -32,7 +30,6 @@ export interface PaginatedResponse<T> {
   };
 }
 
-// HTTP Status Codes
 export enum HttpStatus {
   OK = 200,
   CREATED = 201,
@@ -46,14 +43,12 @@ export enum HttpStatus {
   SERVICE_UNAVAILABLE = 503,
 }
 
-// Request Config
 export interface RequestConfig {
   timeout?: number;
   headers?: Record<string, string>;
   withCredentials?: boolean;
 }
 
-// Auth Types
 export interface LoginRequest {
   email: string;
   password: string;

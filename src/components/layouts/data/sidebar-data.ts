@@ -73,25 +73,21 @@ export const sidebarData: SidebarData = {
           icon: MessagesSquare,
         },
         {
-          title: "Users",
-          url: "/users",
+          title: "Quản lý người dùng",
+          url: "/system-console/users",
           icon: Users,
         },
         {
-          title: "Secured by Clerk",
-          icon: MessagesSquare,
+          title: "Vai trò & Quyền",
+          icon: ShieldCheck,
           items: [
             {
-              title: "Sign In",
-              url: "/clerk/sign-in",
+              title: "Vai trò",
+              url: "/system-console/roles",
             },
             {
-              title: "Sign Up",
-              url: "/clerk/sign-up",
-            },
-            {
-              title: "User Management",
-              url: "/clerk/user-management",
+              title: "Quyền",
+              url: "/system-console/permissions",
             },
           ],
         },

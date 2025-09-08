@@ -17,7 +17,7 @@ export function useLogin() {
 
       queryClient.setQueryData(queryKeys.auth.me(), data.user);
 
-      router.push("/dashboard");
+      router.push("/system-console");
     },
     onError: (error) => {
       console.error("Login failed:", error);
@@ -36,7 +36,7 @@ export function useRegister() {
 
       queryClient.setQueryData(queryKeys.auth.me(), data.user);
 
-      router.push("/dashboard");
+      router.push("/system-console");
     },
     onError: (error) => {
       console.error("Register failed:", error);
@@ -55,12 +55,12 @@ export function useLogout() {
 
       queryClient.clear();
 
-      router.push("/login");
+      router.push("/system-console/login");
     },
     onError: () => {
       apiClient.clearAuth();
       queryClient.clear();
-      router.push("/login");
+      router.push("/system-console/login");
     },
   });
 }
